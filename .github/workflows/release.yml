@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   bump_version:
-    if: "!startsWith(github.event.head_commit.message , 'bump:') && env.ACCESS_TOKEN != ''"
+    if: "!startsWith(github.event.head_commit.message , 'bump:')"
     runs-on: ubuntu-latest
     name: 'Bump version'
     outputs:
@@ -49,6 +49,7 @@ jobs:
           echo "version=\"v$REV\"" >> $GITHUB_OUTPUT
 
       - name: Push changes
+        if: env.ACCESS_TOKEN != ''
         uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ env.ACCESS_TOKEN }}
